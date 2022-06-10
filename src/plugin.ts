@@ -10,7 +10,7 @@ import { VueOndemandRoutingPluginOptions } from './type'
 
 const ENTRY_FILE_PATH = path.resolve(__dirname, './index.js')
 const DEFINITION_FILE_PATH = path.resolve(__dirname, './definitions.js')
-
+const pluginName = 'VueOndemandRoutingPlugin'
 export default class VueOndemandRoutingPlugin {
   public options: VueOndemandRoutingPluginOptions
   public virtualModules: VirtualModulesPlugin
@@ -29,6 +29,15 @@ export default class VueOndemandRoutingPlugin {
 
   apply(compiler: Compiler) {
     this.virtualModules.apply(compiler)
+    if (process.env.NODE_ENV === 'production') {
+      compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
+        try {
+          this.generate()
+        } catch (error) {
+          compilation.errors.push(error)
+        }
+      })
+    }
   }
 
   generate(route?: RawLocation) {
