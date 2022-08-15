@@ -12,6 +12,8 @@
 
 只适用于 `Webpack v4 + Vue v2 + Vue Router v3`，其实可以直接用 [`Vite`](https://vitejs.dev/)...
 
+使用了 [vue-route-generator](https://github.com/ktsn/vue-route-generator) 根据文件路径自动生成路由，无法手动添加动态路由（手动添加的路由不可以按需加载）。
+
 ## 安装与使用 
 
 ```
